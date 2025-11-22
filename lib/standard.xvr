@@ -20,24 +20,23 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+import standard;
 
-// implement fizzbuz with xvrlang
-proc fizzbuzz(number: int): string {
-  if (number % 15 == 0) {
-    return "fizzbuz";
-  }
-  
-  if (number % 3 == 0) {
-    return "fizz";
-  }
+{
+  // get the length or date with standard.clock();
+  // example usage
+  // clock()
+  // clock().length()
+  print(clock().length());
+  print(clock());
 
-  if (number % 5 == 0) {
-    return "buzz";
-  }
-
-  return string number;
+  assert clock().length() == 24, "clock() failed to assign time";
 }
 
-for (var iter: int = 1; iter < 100; iter++) {
-  print(fizzbuzz(iter));
+{
+  // assign as variabel
+  import standard as std;
+
+  assert std["clock"]().length() == 24, "import lib as aliasing failed";
+  print(std["clock"]());
 }
