@@ -1,0 +1,74 @@
+// MIT License
+
+// Copyright (c) 2025 WargaSlowy
+
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
+
+import timer;
+
+{
+  // make count of timer for some logic code
+  // used for benchmark set timer
+  var timeStart: opaque = startTimer();
+  for (var iteration: int = 0; iteration < 100 * 1; iteration++);
+  var timeStop: opaque = timeStart.stopTimer();
+
+  // create some timer for longer period
+  var timerStartTwo: opaque = startTimer();
+  for (var i: int = 0; i < 1000 * 10; i++);
+  var timerStopTwo: opaque = timerStartTwo.stopTimer();
+
+  // check to make sure that the second timer took will
+  // longer than the first timer
+  // INFO: this was the small posibility of failing
+  //       due to external factors
+  var diffData: opaque = timerStop.compareTimer(timerStopTwo);
+
+  assert diffData.getTimerSecond() >= 0, "compareTimer() second are failed";
+  
+  if (diffData.getTimerSecond() == 0) {
+    assert diffData.getTimerMicroseconds() >= 0, "compareTimer() microsecond failed";
+  }
+
+  timerStart.destroyTimer();
+  timerStartTwo.destroyTimer();
+
+  timerStop.destroyTimer();
+  timerStopTwo.destroyTimer();
+  diffData.destroyTimer();
+}
+
+{
+  // set timer manually
+  var timer: opaque = createTimer(42, 8891);
+
+  // check the value data
+  assert timer.getTimerSeconds() == 42, "getTimerSecond() are failed to get";
+  assert timer.getTimerMicroseconds() == 8891, "getTimerMicroseconds() are failed to get";
+
+  // destroy instance timer after using
+  timer.destroyTimer();
+}
+
+{
+  // set timer to check the string representation
+  var timer: opaque = createTimer(20, 999);
+  
+  assert timer.timerToString() == "20.000999", "timerToString() failed to convert strings";
+}
